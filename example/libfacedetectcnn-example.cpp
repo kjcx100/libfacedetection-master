@@ -48,7 +48,10 @@ int my_detect_by_video(unsigned char * result_buffer, const String& filename)
 {
 	
 	VideoCapture cap;
-	cap.open(0);// cap.open(filename); //打开视频，等价于   VideoCapture cap("E://2.avi");
+	if(strlen(filename.c_str()) < 2)
+		cap.open(0);
+	else
+		cap.open(filename); //打开视频，等价于   VideoCapture cap("E://2.avi");
 	if (!cap.isOpened())
 	{
 		fprintf(stderr, "Can not load the video file %s.\n", filename);
