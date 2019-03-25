@@ -40,9 +40,9 @@ the use of this software, even if advised of the possibility of such damage.
 #include "facedetectcnn.h"
 #include <stdio.h>
 #include <string.h>
-
-#if 1
 #include <opencv2/opencv.hpp>
+
+#if 0
 #define TIME_START t=(double)cvGetTickCount();
 #define TIME_END(FUNCNAME)     t=((double)cvGetTickCount()-t)/((double)cvGetTickFrequency()*1000.); printf(FUNCNAME);printf("=%g\n", t); total+=t;
 #define TIME_TOTAL(tt) printf("total time=%g\n", (tt));
@@ -549,7 +549,7 @@ int * facedetect_cnn(unsigned char * result_buffer, //buffer memory for storing 
 
     vector<FaceRect> faces = objectdetect_cnn(rgb_image_data, width, height, step);
 
-    double t, total=0;
+    double total=0;
     TIME_START;
 
     int num_faces =(int)faces.size();

@@ -44,9 +44,63 @@ the use of this software, even if advised of the possibility of such damage.
 #define DETECT_BUFFER_SIZE 0x20000
 using namespace cv;
 
+int my_detect_by_video(unsigned char * result_buffer, const String& filename)
+{
+	
+	VideoCapture cap;
+	cap.open(0);// cap.open(filename); //打开视频，等价于   VideoCapture cap("E://2.avi");
+	if (!cap.isOpened())
+	{
+		fprintf(stderr, "Can not load the video file %s.\n", filename);
+		return -1;
+	}
+
+	double width = cap.get(CV_CAP_PROP_FRAME_WIDTH);  //帧宽度
+	double height = cap.get(CV_CAP_PROP_FRAME_HEIGHT); //帧高度
+	double frameRate = cap.get(CV_CAP_PROP_FPS);  //帧率 x frames/s
+	double totalFrames = cap.get(CV_CAP_PROP_FRAME_COUNT); //总帧数
+	cout << "视频宽度=" << width << endl;
+	cout << "视频高度=" << height << endl;
+	cout << "视频总帧数=" << totalFrames << endl;
+	cout << "帧率=" << frameRate << endl;
+	Mat frame;
+	int * pResults = NULL;
+	while (1)
+	{
+		cap >> frame;//等价于cap.read(frame);
+		if (frame.empty())
+		{
+			fprintf(stderr, "frame.empty\n");
+			break;
+		}
+
+		pResults = facedetect_cnn(result_buffer, (unsigned char*)(frame.ptr(0)), frame.cols, frame.rows, (int)frame.step);
+
+		printf("%d faces detected.\n", (pResults ? *pResults : 0));
+		Mat result_cnn = frame.clone();
+		//print the detection results
+		for (int i = 0; i < (pResults ? *pResults : 0); i++)
+		{
+			short * p = ((short*)(pResults + 1)) + 142 * i;
+			int x = p[0];
+			int y = p[1];
+			int w = p[2];
+			int h = p[3];
+			int neighbors = p[4];
+			int angle = p[5];
+
+			printf("face_rect=[%d, %d, %d, %d], neighbors=%d, angle=%d\n", x, y, w, h, neighbors, angle);
+			rectangle(result_cnn, Rect(x, y, w, h), Scalar(0, 255, 0), 2);
+		}
+		imshow("result_cnn", result_cnn);
+		if(waitKey(20) > 0)
+			break;
+	}
+	return 0;
+}
 int main(int argc, char* argv[])
 {
-    if(argc != 2)
+    if(argc < 2)
     {
         printf("Usage: %s <image_file_name>\n", argv[0]);
         return -1;
@@ -54,8 +108,20 @@ int main(int argc, char* argv[])
 	//lxl add for recog video
 	if (strstr(argv[1], "demo") != NULL)
 	{
+		//pBuffer is used in the detection functions.
+		//If you call functions in multiple threads, please create one buffer for each thread!
+		unsigned char * pBuffer = (unsigned char *)malloc(DETECT_BUFFER_SIZE);
+		if (!pBuffer)
+		{
+			fprintf(stderr, "Can not alloc buffer.\n");
+			return -1;
+		}
 		cout << "for video test !!!" << endl;
-
+		my_detect_by_video(pBuffer,argv[2]);
+		//release the buffer
+		free(pBuffer);
+		cout << "for video test end!!!" << endl;
+		return 0;
 	}
 	//load an image and convert it to gray (single-channel)
 	Mat image = imread(argv[1]); 

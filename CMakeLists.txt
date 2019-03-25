@@ -5,7 +5,7 @@ project(facedetection)
 cmake_minimum_required(VERSION 2.8)
 
 option(ENABLE_INT8 "use int8" OFF)
-option(ENABLE_AVX2 "use avx2" OFF)
+option(ENABLE_AVX2 "use avx2" ON)
 option(ENABLE_NEON "whether use neon, if use arm please set it on" OFF)
 option(DEMO "build the demo" OFF)
 

@@ -687,7 +687,7 @@ bool maxpooling2x2S2(const CDataBlob *inputData, CDataBlob *outputData)
         cerr << __FUNCTION__ << ": The input data is null." << endl;
         return false;
     }
-    int outputW = static_cast<int>(ceil((inputData->width - 3.0f) / 2)) + 1;
+    int outputW = static_cast<int>(ceil((inputData->width - 3.0f) / 2)) + 1;	//向上取整
     int outputH = static_cast<int>(ceil((inputData->height - 3.0f) / 2)) + 1;
     int outputC = inputData->channels;
 
