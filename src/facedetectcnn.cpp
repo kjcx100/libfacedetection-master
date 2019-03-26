@@ -630,7 +630,8 @@ bool convolution(CDataBlob *inputData, const Filters* filters, CDataBlob *output
     }
 
     outputData->create(outputW, outputH, outputC);
-
+	LOGD("func convolution iputW=%d,inputH=%d,inputC=%d", inputData->width, inputData->height, inputData->channels);
+	LOGD("func convolution outputW=%d,outputH=%d,outputC=%d", outputW, outputH, outputC);
     /*
     {
         float maxval = -FLT_MAX;

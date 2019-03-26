@@ -54,6 +54,7 @@ the use of this software, even if advised of the possibility of such damage.
 #endif
 
 
+
 #define NUM_CONV_LAYER 24
 
 #if defined(_ENABLE_INT8_CONV)
@@ -222,13 +223,15 @@ vector<FaceRect> objectdetect_cnn(unsigned char * rgbImageData, int width, int h
 /***************CONV1*********************/
     int convidx = 0;
     TIME_START;
+	LOGD("convolution convidx==%d ", convidx);
     convolution(&inputImage, param_pFilters + convidx, pConvDataBlobs + convidx);
     TIME_END("conv11");
     TIME_START;
     relu(pConvDataBlobs+convidx);
     TIME_END("relu11");
 
-    convidx++;
+    convidx++;	//1
+	LOGD("convolution convidx==%d ", convidx);
     TIME_START;
     convolution(pConvDataBlobs+convidx-1, param_pFilters+convidx, pConvDataBlobs+convidx);
     TIME_END("conv12");
@@ -241,7 +244,8 @@ vector<FaceRect> objectdetect_cnn(unsigned char * rgbImageData, int width, int h
     TIME_END("pool1");
 
 /***************CONV2*********************/
-    convidx++;
+    convidx++;	//2
+	LOGD("convolution convidx==%d ", convidx);
 TIME_START;
     convolution(&pool1, param_pFilters+convidx, pConvDataBlobs+convidx);
 TIME_END("conv21");
@@ -249,7 +253,8 @@ TIME_START;
     relu(pConvDataBlobs+convidx);
 TIME_END("relu21");
 
-convidx++;
+	convidx++;	//3
+	LOGD("convolution convidx==%d ", convidx);
 TIME_START;
     convolution(pConvDataBlobs+convidx-1, param_pFilters+convidx, pConvDataBlobs+convidx);
 TIME_END("conv22");
@@ -262,7 +267,8 @@ TIME_START;
 TIME_END("pool2");
 
 /***************CONV3*********************/
-    convidx++;
+    convidx++;	//4
+	LOGD("convolution convidx==%d ", convidx);
 TIME_START;
     convolution(&pool2, param_pFilters+convidx, pConvDataBlobs+convidx);
 TIME_END("conv31");
@@ -270,7 +276,8 @@ TIME_START;
     relu(pConvDataBlobs+convidx);
 TIME_END("relu31");
 
-convidx++;
+	convidx++;	//5
+	LOGD("convolution convidx==%d ", convidx);
 TIME_START;
     convolution(pConvDataBlobs+convidx-1, param_pFilters+convidx, pConvDataBlobs+convidx);
 TIME_END("conv32");
@@ -278,7 +285,8 @@ TIME_START;
     relu(pConvDataBlobs+convidx);
 TIME_END("relu32");
 
-convidx++;
+	convidx++;	//6
+	LOGD("convolution convidx==%d ", convidx);
 TIME_START;
     convolution(pConvDataBlobs+convidx-1, param_pFilters+convidx, pConvDataBlobs+convidx);
 TIME_END("conv33");
@@ -291,7 +299,8 @@ TIME_START;
 TIME_END("pool3");
 
 /***************CONV4*********************/
-    convidx++;
+    convidx++;	//7
+	LOGD("convolution convidx==%d ", convidx);
 TIME_START;
     convolution(&pool3, param_pFilters+convidx, pConvDataBlobs+convidx);
 TIME_END("conv41");
@@ -299,7 +308,8 @@ TIME_START
     relu(pConvDataBlobs+convidx);
 TIME_END("relu41");
 
-convidx++;
+	convidx++;	//8
+	LOGD("convolution convidx==%d ", convidx);
 TIME_START;
     convolution(pConvDataBlobs+convidx-1, param_pFilters+convidx, pConvDataBlobs+convidx);
 TIME_END("conv42");
@@ -307,7 +317,8 @@ TIME_START;
     relu(pConvDataBlobs+convidx);
 TIME_END("relu42");
 
-convidx++;
+	convidx++;	//9
+	LOGD("convolution convidx==%d ", convidx);
 TIME_START;
     convolution(pConvDataBlobs+convidx-1, param_pFilters+convidx, pConvDataBlobs+convidx);
 TIME_END("conv43");
@@ -320,7 +331,8 @@ TIME_START;
 TIME_END("pool4");
 
 /***************CONV5*********************/
-    convidx++;
+    convidx++;	//10
+	LOGD("convolution convidx==%d ", convidx);
 TIME_START;
     convolution(&pool4, param_pFilters+convidx, pConvDataBlobs+convidx);
 TIME_END("conv51");
@@ -328,7 +340,8 @@ TIME_START;
     relu(pConvDataBlobs+convidx);
 TIME_END("relu51");
 
-convidx++;
+	convidx++;	//11
+	LOGD("convolution convidx==%d ", convidx);
 TIME_START;
     convolution(pConvDataBlobs+convidx-1, param_pFilters+convidx, pConvDataBlobs+convidx);
 TIME_END("conv52");
@@ -336,7 +349,8 @@ TIME_START
     relu(pConvDataBlobs+convidx);
 TIME_END("relu52");
 
-convidx++;
+	convidx++;	//12
+	LOGD("convolution convidx==%d ", convidx);
 TIME_START;
     convolution(pConvDataBlobs+convidx-1, param_pFilters+convidx, pConvDataBlobs+convidx);
 TIME_END("conv53");
@@ -349,7 +363,8 @@ TIME_START;
 TIME_END("pool5");
 
 /***************CONV6*********************/
-    convidx++;
+    convidx++;	//13
+	LOGD("convolution convidx==%d ", convidx);
 TIME_START;
     convolution(&pool5, param_pFilters+convidx, pConvDataBlobs+convidx);
 TIME_END("conv61");
@@ -357,7 +372,8 @@ TIME_START;
     relu(pConvDataBlobs+convidx);
 TIME_END("relu61");
 
-convidx++;
+	convidx++;	//14
+	LOGD("convolution convidx==%d ", convidx);
 TIME_START;
     convolution(pConvDataBlobs+convidx-1, param_pFilters+convidx, pConvDataBlobs+convidx);
 TIME_END("conv62");
@@ -365,7 +381,8 @@ TIME_START
     relu(pConvDataBlobs+convidx);
 TIME_END("relu62");
 
-convidx++;
+	convidx++;	//15
+	LOGD("convolution convidx==%d ", convidx);
 TIME_START;
     convolution(pConvDataBlobs+convidx-1, param_pFilters+convidx, pConvDataBlobs+convidx);
 TIME_END("conv63");
@@ -379,12 +396,14 @@ TIME_END("relu63");
     normalize(pConvDataBlobs+ conv3idx, param_pConv3Norm);
     TIME_END("norm3");
 
-    convidx++;
+    convidx++;	//16
+	LOGD("convolution convidx==%d ", convidx);
     TIME_START
     convolution(pConvDataBlobs+ conv3idx, param_pFilters+convidx, pConvDataBlobs+convidx);
     TIME_END("prior3 loc");
 
-    convidx++;
+    convidx++;	//17
+	LOGD("convolution convidx==%d ", convidx);
     TIME_START;
     convolution(pConvDataBlobs+ conv3idx, param_pFilters+convidx, pConvDataBlobs+convidx);
     TIME_END("prior3 conf");
@@ -400,12 +419,14 @@ TIME_END("relu63");
     normalize(pConvDataBlobs + conv4idx, param_pConv4Norm);
     TIME_END("norm4");
 
-    convidx++;
+    convidx++;	//18
+	LOGD("convolution convidx==%d ", convidx);
     TIME_START
         convolution(pConvDataBlobs + conv4idx, param_pFilters + convidx, pConvDataBlobs + convidx);
     TIME_END("prior4 loc");
 
-    convidx++;
+    convidx++;	//19
+	LOGD("convolution convidx==%d ", convidx);
     TIME_START;
     convolution(pConvDataBlobs + conv4idx, param_pFilters + convidx, pConvDataBlobs + convidx);
     TIME_END("prior4 conf");
@@ -421,12 +442,14 @@ TIME_END("relu63");
     normalize(pConvDataBlobs + conv5idx, param_pConv5Norm);
     TIME_END("norm5");
 
-    convidx++;
+    convidx++;	//20
+	LOGD("convolution convidx==%d ", convidx);
     TIME_START
         convolution(pConvDataBlobs + conv5idx, param_pFilters + convidx, pConvDataBlobs + convidx);
     TIME_END("prior5 loc");
 
-    convidx++;
+    convidx++;	//21
+	LOGD("convolution convidx==%d ", convidx);
     TIME_START;
     convolution(pConvDataBlobs + conv5idx, param_pFilters + convidx, pConvDataBlobs + convidx);
     TIME_END("prior5 conf");
@@ -442,12 +465,14 @@ TIME_END("relu63");
     normalize(pConvDataBlobs + conv6idx, param_pConv5Norm);
     TIME_END("norm6");
 
-    convidx++;
+    convidx++;	//22
+	LOGD("convolution convidx==%d ", convidx);
     TIME_START
         convolution(pConvDataBlobs + conv6idx, param_pFilters + convidx, pConvDataBlobs + convidx);
     TIME_END("prior6 loc");
 
-    convidx++;
+    convidx++;	//23
+	LOGD("convolution convidx==%d ", convidx);
     TIME_START;
     convolution(pConvDataBlobs + conv6idx, param_pFilters + convidx, pConvDataBlobs + convidx);
     TIME_END("prior6 conf");
@@ -483,6 +508,10 @@ TIME_START
     concat4(&conv3priorbox_flat, &conv4priorbox_flat, &conv5priorbox_flat, &conv6priorbox_flat, &mbox_priorbox);
     concat4(&conv3loc_flat, &conv4loc_flat, &conv5loc_flat, &conv6loc_flat, &mbox_loc);
     concat4(&conv3conf_flat, &conv4conf_flat, &conv5conf_flat, &conv6conf_flat, &mbox_conf);
+	LOGD("conv3loc_flat.width=%d,conv3loc_flat.height=%d,conv3loc_flat.channels=%d", conv3loc_flat.width, conv3loc_flat.height, conv3loc_flat.channels);
+	LOGD("conv4loc_flat.width=%d,conv4loc_flat.height=%d,conv4loc_flat.channels=%d", conv4loc_flat.width, conv4loc_flat.height, conv4loc_flat.channels);
+	LOGD("conv5loc_flat.width=%d,conv5loc_flat.height=%d,conv5loc_flat.channels=%d", conv5loc_flat.width, conv5loc_flat.height, conv5loc_flat.channels);
+	LOGD("conv6loc_flat.width=%d,conv6loc_flat.height=%d,conv6loc_flat.channels=%d", conv6loc_flat.width, conv6loc_flat.height, conv6loc_flat.channels);
 TIME_END("concat prior")
 
 TIME_START

@@ -69,6 +69,11 @@ int * facedetect_cnn(unsigned char * result_buffer, //buffer memory for storing 
 #error Cannot enable the two of SSE2 AVX and NEON at the same time.
 #endif
 
+#if 1
+#define LOGD(fmt,...)  printf(fmt "\n", ##__VA_ARGS__)
+#else
+#define LOGD(fmt,...)
+#endif
 
 #if defined(_OPENMP)
 #include <omp.h>
